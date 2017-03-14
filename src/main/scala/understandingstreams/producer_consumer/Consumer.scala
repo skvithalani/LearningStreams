@@ -4,8 +4,6 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink}
 
-import scala.concurrent.duration.DurationDouble
-import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 case class Consumer() {
 
@@ -15,6 +13,7 @@ case class Consumer() {
   private var shouldIContinue = false
   private val source = Producer().getSource
 
+  //source is drained at here and not available for Sink.seq
 //  val doneF = source.runForeach(s => meth(s))
 
   val seqF = source.take(6).toMat(Sink.seq)(Keep.right).run()
@@ -50,4 +49,5 @@ case class Consumer() {
     }
   }
 
+  seqF.onComplete(s => as.terminate())
 }
