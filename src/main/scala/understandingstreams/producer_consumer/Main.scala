@@ -4,5 +4,6 @@ object Main extends App{
 
   Consumer1()
   Consumer()
+  Consumer1()
 
 }
