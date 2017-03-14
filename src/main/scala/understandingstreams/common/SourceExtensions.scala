@@ -1,4 +1,4 @@
-package understandingstreams.producer_consumer
+package understandingstreams.common
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Source, SourceQueueWithComplete}

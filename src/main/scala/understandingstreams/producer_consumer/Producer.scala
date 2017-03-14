@@ -2,7 +2,7 @@ package understandingstreams.producer_consumer
 
 import akka.stream.{ActorMaterializer, OverflowStrategy}
 import akka.stream.scaladsl.Source
-import SourceExtensions.RichSource
+import understandingstreams.common.SourceExtensions.RichSource
 import akka.actor.ActorSystem
 
 import scala.concurrent.ExecutionContext.Implicits.global

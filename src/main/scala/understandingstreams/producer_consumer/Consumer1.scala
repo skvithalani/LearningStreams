@@ -45,7 +45,9 @@ case class Consumer1() {
     }
   }
 
-  Producer().tryCallback(meth)
+  private val producer = Producer()
+  producer.tryCallback(meth)
+  producer.tryCallback(meth)
 
 
 }
