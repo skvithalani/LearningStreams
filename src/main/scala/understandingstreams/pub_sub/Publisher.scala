@@ -1,8 +1,9 @@
 package understandingstreams.pub_sub
 
 import akka.actor.ActorSystem
-import akka.stream.{ActorMaterializer, OverflowStrategy}
+import akka.stream.{ActorMaterializer, KillSwitches, OverflowStrategy}
 import akka.stream.scaladsl.{BroadcastHub, Keep, Sink, Source}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 case class Publisher() {
   implicit val as = ActorSystem("system")
@@ -27,7 +28,7 @@ case class Publisher() {
   }
 
   def consumeResolvedTcp() = {
-    val filter = broadcastSource.filter(s => s.startsWith("ResolvedTcp"))
+    val filter = broadcastSource.filter(s => s.startsWith("ResolvedTcp")).viaMat(KillSwitches.single)(Keep.right)
     filter
   }
 

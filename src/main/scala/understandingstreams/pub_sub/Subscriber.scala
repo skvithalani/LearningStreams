@@ -2,7 +2,7 @@ package understandingstreams.pub_sub
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.Sink
+import akka.stream.scaladsl.{Keep, Sink}
 
 case class Subscriber() {
 
@@ -54,7 +54,11 @@ case class Subscriber() {
 
   Thread.sleep(5000)
 
-  publisher.consumeResolvedTcp().runForeach(println)
+  private val resolvedTcp = publisher.consumeResolvedTcp()
+  val switch = resolvedTcp.toMat(Sink.foreach(println))(Keep.left).run()
+  switch.shutdown()
+
+  val switch1 = resolvedTcp.toMat(Sink.foreach(println))(Keep.left).run()
 
   println("Going to akka")
   publisher.consumeResolvedAkka().runForeach(println)
