@@ -13,8 +13,9 @@ case class Consumer() {
   private var shouldIContinue = false
   private val source = Producer().getSource
 
-  //source is drained at here and not available for Sink.seq
-//  val doneF = source.runForeach(s => meth(s))
+  //source is drained here and not available for Sink.seq
+  val doneF = source.runForeach(s => meth(s))
+  val doneF1 = source.runForeach(s => meth(s))
 
   val seqF = source.take(6).toMat(Sink.seq)(Keep.right).run()
 
