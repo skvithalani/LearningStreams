@@ -13,7 +13,9 @@ case class Consumer() {
   private var shouldIContinue = false
   private val source = Producer().getSource
 
-  //source is drained here and not available for Sink.seq
+  //Future of splitMat gets completed on first materialization of queue
+  // and not on subsequent materialization of queue.
+  // So first queue only gets element in it
   val doneF = source.runForeach(s => meth(s))
   val doneF1 = source.runForeach(s => meth(s))
 

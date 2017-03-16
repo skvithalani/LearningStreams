@@ -13,6 +13,7 @@ object SourceExtensions {
       val promise = Promise[SourceQueueWithComplete[String]]
       val resultSource = source.mapMaterializedValue(mat => {
         promise.trySuccess(mat)
+        println("In map materialized")
         NotUsed
       })
 

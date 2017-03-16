@@ -65,5 +65,4 @@ case class Subscriber() {
 
   println("Going to removed")
   publisher.consumeRemoved(meth)
-
 }
